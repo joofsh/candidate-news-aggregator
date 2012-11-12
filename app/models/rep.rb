@@ -41,18 +41,12 @@ class Rep
     if filter == true
       stories = []
       [ECONOMY, HEALTHCARE, EDUCATION].each do |topic|
-        response = HTTParty.get("http://api.npr.org/query?#{topics_query_string topic}fields=text,title&requiredAssets=text&searchTerm=#{URI::escape(name)}&dateType=story&output=JSON&apiKey=#{NPR_API_KEY}")
+        response = HTTParty.get("http://api.npr.org/query?id=#{topic}&fields=text,title&requiredAssets=text&searchTerm=#{URI::escape(name)}&dateType=story&output=JSON&apiKey=#{NPR_API_KEY}")
         if response['list']['story'] != nil
           stories += response['list']['story']
         end
       end
       stories
-    end
-  end
-
-  def topics_query_string topic
-    if topic != nil
-      "id=#{topic}&"
     end
   end
 end
